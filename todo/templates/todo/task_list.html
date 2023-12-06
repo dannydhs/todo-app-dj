@@ -1,0 +1,34 @@
+{% extends "todo/base_generic.html" %}
+
+{% block title %}List Of Task{% endblock %}
+
+{% block content %}
+<h2 class="text-2xl font-bold mb-4">Task List</h2>
+{% if tasks %}
+    <ul class="w-full">
+    {% for task in tasks %}
+        <li class="flex items-center justify-between border-b border-gray-200 py-2">
+            <span class="text-lg">
+                {{ task.title }} - {% if task.completed %}Completed{% else %}Pending{% endif %}
+            </span>
+            <div class="space-x-2">
+                <a href="{% url 'todo:complete_task' task.id %}"
+                    class="text-blue-500 hover:underline"
+                >Complete</a>
+                <a href="{% url 'todo:edit_task' task.id %}"
+                    class="text-yellow-500 hover:underline"
+                >Edit</a>
+                <a href="{% url 'todo:delete_task' task.pk %}"
+                    class="text-red-500 hover:underline"
+                >Delete</a>
+            </div>
+            
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p class="mx-auto w-80">Empty List.</p>
+{% endif %}
+<br>
+<a href="{% url 'todo:add_task' %}" class="text-blue-500 hover:underline">Add Task</a>
+{% endblock content %}
